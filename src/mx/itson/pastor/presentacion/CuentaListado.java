@@ -5,21 +5,22 @@
 package mx.itson.pastor.presentacion;
 
 import java.util.List;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import mx.itson.pastor.entidades.Cliente;
+import mx.itson.pastor.entidades.Cuenta;
 import mx.itson.pastor.persistencia.ClienteDAO;
+import mx.itson.pastor.persistencia.CuentaDAO;
 
 /**
  *
  * @author ovalo
  */
-public class ClienteListado extends javax.swing.JFrame {
+public class CuentaListado extends javax.swing.JFrame {
 
     /**
-     * Creates new form ClienteListado
+     * Creates new form CuentaListado
      */
-    public ClienteListado() {
+    public CuentaListado() {
         initComponents();
     }
 
@@ -32,8 +33,11 @@ public class ClienteListado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tdlClientes = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
+
+        jFormattedTextField1.setText("jFormattedTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -42,55 +46,57 @@ public class ClienteListado extends javax.swing.JFrame {
             }
         });
 
-        tdlClientes.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Dirección", "Telefono", "E-mail"
+                "Numero", "Nombre", "Direccion", "Telefono", "Email"
             }
         ));
-        jScrollPane1.setViewportView(tdlClientes);
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(57, 57, 57)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 25, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        List<Cliente> clientes = ClienteDAO.obtenerTodos();
+List<Cuenta> cuentas = CuentaDAO.obtenerTodos();
+List<Cliente> clientes = ClienteDAO.obtenerTodos();
 
-        DefaultTableModel modelo = (DefaultTableModel) tdlClientes.getModel();
-        modelo.setRowCount(0);
+DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
 
-        for (Cliente c : clientes) {
+modelo.setRowCount(0);
+
+
+        for (Cuenta cuenta : cuentas) {
             modelo.addRow(new Object[]{
-                c.getNombre(),
-                c.getDireccion(),
-                c.getTelefono(),
-                c.getEmail()
+                cuenta.getNumero(),
+                cuenta.getCliente().getNombre(),
+                cuenta.getCliente().getDireccion(),
+                cuenta.getCliente().getTelefono(),
+                cuenta.getCliente().getEmail()
 
             });
-        }
-
+}
 
     }//GEN-LAST:event_formWindowOpened
 
@@ -111,26 +117,32 @@ public class ClienteListado extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClienteListado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CuentaListado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClienteListado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CuentaListado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClienteListado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CuentaListado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClienteListado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CuentaListado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClienteListado().setVisible(true);
+                new CuentaListado().setVisible(true);
             }
         });
     }
 
+  
+       
+    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tdlClientes;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

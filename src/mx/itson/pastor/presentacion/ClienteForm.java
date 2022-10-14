@@ -4,6 +4,7 @@
  */
 package mx.itson.pastor.presentacion;
 
+import javax.swing.JOptionPane;
 import mx.itson.pastor.negocio.ClienteNegocio;
 
 /**
@@ -134,7 +135,12 @@ public class ClienteForm extends javax.swing.JFrame {
         String direccion = txtDireccion.getText();
         String telefono = txtTelefono.getText();
         String email = txtEmail.getText();
-        ClienteNegocio.guardar(nombre, direccion, telefono, email);
+        if (ClienteNegocio.guardar(nombre, direccion, telefono, email)) {
+            JOptionPane.showMessageDialog(this, "El registro se guardo correctamente", "Registro guardado", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "El registro no se guardo correctamente", "Ya existe", JOptionPane.INFORMATION_MESSAGE);
+        }
+
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 

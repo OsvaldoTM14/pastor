@@ -12,7 +12,7 @@ public class Conexion {
     public static Connection obtener() {
         Connection conexion = null;
         try {
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/pastordb?user=root&password=Cr7711xd");
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/pastordb1?user=root&password=Cr7711xd");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

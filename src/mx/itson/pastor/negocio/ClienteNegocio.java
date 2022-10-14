@@ -16,6 +16,7 @@ public class ClienteNegocio {
         boolean resultado = false;
 
         try {
+            if (!ClienteDAO.validarCorreo(email));
             resultado = ClienteDAO.guardar(nombre, direccion, telefono, email);
         } catch (Exception e) {
             System.err.print(e.getMessage());

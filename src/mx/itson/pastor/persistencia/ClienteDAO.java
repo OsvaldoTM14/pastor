@@ -46,12 +46,13 @@ public class ClienteDAO {
 
         try {
             Connection connection = Conexion.obtener();
-            String consulta = "INSERT INTO cliente nombre, direccion, telefono VALUES (?, ?, ?, ?)";
+            String consulta = "INSERT INTO cliente (nombre, direccion, telefono, email) VALUES (?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(consulta);
             statement.setString(1, nombre);
             statement.setString(2, direccion);
             statement.setString(3, telefono);
             statement.setString(4, email);
+            statement.execute();
 
             resultado = statement.getUpdateCount() == 1;
         } catch (Exception ex) {
@@ -67,16 +68,78 @@ public class ClienteDAO {
         try {
             Connection cone = Conexion.obtener();
             String consulta = "Select email FROM cliente WHERE email = ?";
-            PreparedStatement statemnet = cone.prepareCall(consulta);
+            PreparedStatement statemnet = cone.prepareStatement(consulta);
             statemnet.setString(1, email);
             ResultSet rs = statemnet.executeQuery();
             resultado = rs.next();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Ocurrio un error: " + e.getMessage());
         }
         return resultado;
 
+
+
     }
+
+public static List<String> nombreCliente() {
+
+        List<String> listadoCliente = new ArrayList();
+
+        try {
+            Connection con = Conexion.obtener();
+
+            String consulta = "SELECT nombre FROM cliente WHERE id NOT IN (SELECT idCliente FROM cuenta) ";
+            PreparedStatement st = con.prepareStatement(consulta);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                String nombre = new String();
+
+                nombre = rs.getString("nombre");
+
+                listadoCliente.add(nombre);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return listadoCliente;
+    }
+
+public static Cliente obtenerCliente(String busqueda) {
+
+        Cliente cliente = new Cliente();
+        try {
+
+            Connection con = Conexion.obtener();
+            String consulta = "SELECT * FROM cliente WHERE id=? OR nombre=? OR direccion=? OR telefono=? OR email=?";
+            PreparedStatement st = con.prepareStatement(consulta);
+            st.setString(1, busqueda);
+            st.setString(2, busqueda);
+            st.setString(3, busqueda);
+            st.setString(4, busqueda);
+            st.setString(5, busqueda);
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                cliente.setId(rs.getInt(1));
+                cliente.setNombre(rs.getString(2));
+                cliente.setDireccion(rs.getString(3));
+                cliente.setTelefono(rs.getString(4));
+                cliente.setEmail(rs.getString(5));
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return cliente;
+    }
+
 
 
 // Holaaa
